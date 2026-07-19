@@ -57,35 +57,35 @@ WorkNest is a full-stack Employee Management System designed to handle secure au
 
 ```mermaid
 graph TD
-    subgraph Client [Frontend - React.js]
-        UI[Vite + React UI]
-        State[Context API]
-        Router[React Router DOM]
-        Axios[Axios Interceptors]
-        
+    subgraph Client["Frontend - React.js"]
+        UI["Vite + React UI"]
+        State["Context API"]
+        Router["React Router DOM"]
+        Axios["Axios Interceptors"]
+
         UI --> State
         UI --> Router
         Router --> Axios
     end
 
-    subgraph Server [Backend - Node.js + Express]
-        API[Express REST API]
-        Auth[JWT & bcrypt]
-        RBAC[Role Middleware]
-        PrismaORM[Prisma Client]
+    subgraph Server["Backend - Node.js + Express"]
+        API["Express REST API"]
+        Auth["JWT Authentication + bcrypt"]
+        RBAC["Role-Based Access Control Middleware"]
+        Prisma["Prisma Client"]
 
         API --> Auth
         Auth --> RBAC
-        RBAC --> PrismaORM
+        RBAC --> Prisma
     end
 
-    subgraph Database [Neon PostgreSQL]
-        Postgres[(PostgreSQL)]
+    subgraph Database["Neon PostgreSQL"]
+        DB[(PostgreSQL Database)]
     end
 
-    %% Connections
-    Axios -- "HTTP Requests (with cookies)" --> API
-    PrismaORM -- "TCP/IP Connection" --> Postgres
+    Axios -->|"HTTP Requests with Cookies"| API
+    Prisma -->|"Database Connection"| DB
+
 ```
 
 ---
