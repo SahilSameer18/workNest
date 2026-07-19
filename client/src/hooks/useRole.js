@@ -21,5 +21,6 @@ export const useRole = () => {
     isEmployee,
     canManage,
     canDelete,
+    canAssignSuperAdmin: isSuperAdmin,
   };
 };

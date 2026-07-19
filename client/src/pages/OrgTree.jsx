@@ -7,7 +7,7 @@ import { SkeletonOrgTree } from '../components/Skeleton.jsx';
 const OrgNode = ({ employee, level = 0 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   
-  const hasChildren = employee.reportees && employee.reportees.length > 0;
+  const hasChildren = employee.children && employee.children.length > 0;
   const paddingLeft = level === 0 ? 0 : 32; // 32px indent per level
 
   return (
@@ -47,7 +47,7 @@ const OrgNode = ({ employee, level = 0 }) => {
         {/* Child Count Badge (Only visible on hover or collapsed if has children) */}
         {hasChildren && (
           <div className="ml-4 px-2 py-0.5 rounded-full bg-surface-2 text-gray-500 text-[10px] font-bold">
-            {employee.reportees.length}
+            {employee.children.length}
           </div>
         )}
       </div>
@@ -61,8 +61,8 @@ const OrgNode = ({ employee, level = 0 }) => {
             style={{ left: `${paddingLeft + 35}px` }} 
           />
           <div className="flex flex-col gap-1 w-full relative z-10">
-            {employee.reportees.map((reportee) => (
-              <OrgNode key={reportee.id} employee={reportee} level={level + 1} />
+            {employee.children.map((child) => (
+              <OrgNode key={child.id} employee={child} level={level + 1} />
             ))}
           </div>
         </div>

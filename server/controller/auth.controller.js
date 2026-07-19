@@ -34,12 +34,14 @@ export const login = async (req, res, next) => {
       { expiresIn: "2h" }
     );
 
+    const isProd = process.env.NODE_ENV === "production";
+
     // Set secure cookie with the JWT token
     res.cookie("token", token, {
       httpOnly: true, // Prevents access via client-side JavaScript (XSS protection)
-      secure: process.env.NODE_ENV === "production",
+      secure: isProd,
       maxAge: 2 * 60 * 60 * 1000, // 2 hours
-      sameSite: "strict"
+      sameSite: isProd ? "none" : "lax"
     });
 
     const { password: _, ...userWithoutPassword } = employee;
@@ -52,10 +54,11 @@ export const login = async (req, res, next) => {
 // Clears the token cookie, effectively logging out the user
 export const logout = async (req, res, next) => {
   try {
+    const isProd = process.env.NODE_ENV === "production";
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict"
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax"
     });
     res.json({ message: "Logged out successfully." });
   } catch (error) {
@@ -72,4 +75,3 @@ export const getMe = async (req, res, next) => {
     next(error);
   }
 };
-

@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import { getAllEmployees, deleteEmployee } from '../api/employeeApi.js';
@@ -53,14 +53,15 @@ const EmployeeList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
-  // Handlers
-  const handleSearch = (searchTerm) => {
+  // Handlers — wrapped in useCallback so SearchBar's useEffect dependency on
+  // onSearch does not cause a fresh call every time EmployeeList re-renders.
+  const handleSearch = useCallback((searchTerm) => {
     setQuery((prev) => ({ ...prev, search: searchTerm, page: 1 }));
-  };
+  }, []);
 
-  const handleFilterChange = (newFilters) => {
+  const handleFilterChange = useCallback((newFilters) => {
     setQuery((prev) => ({ ...prev, ...newFilters, page: 1 }));
-  };
+  }, []);
 
   const handlePageChange = (newPage) => {
     setQuery((prev) => ({ ...prev, page: newPage }));

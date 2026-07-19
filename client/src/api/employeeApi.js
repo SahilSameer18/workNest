@@ -21,9 +21,9 @@ export const updateEmployee = (id, data) =>
 export const deleteEmployee = (id) =>
   api.delete(`/employees/${id}`);
 
-// GET /api/employees/org-tree
+// GET /api/organization/tree
 export const getOrgTree = () =>
-  api.get('/employees/org-tree');
+  api.get('/organization/tree');
 
 // GET /api/employees/me (My Profile)
 export const getMyProfile = () =>

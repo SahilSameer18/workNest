@@ -38,6 +38,19 @@ router.post(
   createEmployee
 );
 
+// GET /api/employees/me — full profile of the logged-in user (all roles)
+// IMPORTANT: must be declared before /:id so Express matches it first.
+router.get(
+  "/me",
+  requireRoles(["SUPER_ADMIN", "HR_MANAGER", "EMPLOYEE"]),
+  (req, res, next) => {
+    // Inject the real UUID so getEmployeeById resolves the correct record
+    req.params.id = req.user.id;
+    next();
+  },
+  getEmployeeById
+);
+
 // GET /api/employees/:id — fetch single employee (EMPLOYEE sees own profile only)
 router.get(
   "/:id",
