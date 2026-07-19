@@ -9,6 +9,10 @@
 
 WorkNest is a full-stack Employee Management System designed to handle secure authentication, role-based access control, organizational hierarchy visualization, and comprehensive employee lifecycle management.
 
+🔗 **Live Links:**
+* **Frontend Web App (Vercel):** [https://worknest-ss.vercel.app](https://worknest-ss.vercel.app)
+* **Backend API Server (Render):** [https://worknest-wu99.onrender.com](https://worknest-wu99.onrender.com)
+
 ---
 
 ## 🛠️ Tech Stack
@@ -153,23 +157,41 @@ Your application will now be running at `http://localhost:5173`!
 
 ## 📡 Core API Endpoints
 
+For a detailed breakdown of payload structures, validation constraints, and JSON response examples, please refer to the dedicated **[API Documentation](API_DOCUMENTATION.md)**.
+
 ### Authentication
-- `POST /api/auth/login` - Authenticate user & receive JWT cookie
-- `POST /api/auth/logout` - Clear JWT session
-- `GET /api/auth/me` - Retrieve current session user
+- `POST /api/auth/login` - Authenticate credentials & set session cookie
+- `POST /api/auth/logout` - Clear session cookie
+- `GET /api/auth/me` - Fetch session details for active token
 
 ### Employee Management
-- `GET /api/employees` - List all employees (supports search, sort, filter)
-- `GET /api/employees/stats` - Fetch dashboard statistics
-- `POST /api/employees` - Create a new employee
-- `GET /api/employees/:id` - Fetch single employee details
-- `PUT /api/employees/:id` - Update employee
-- `DELETE /api/employees/:id` - Soft delete employee
+- `GET /api/employees` - List employees (supports pagination, filtering, search & sorting)
+- `POST /api/employees` - Create a new employee profile
+- `GET /api/employees/me` - Fetch logged-in user profile (with manager & reportees details)
+- `GET /api/employees/:id` - Fetch details for a specific employee profile
+- `PUT /api/employees/:id` - Update employee details
+- `DELETE /api/employees/:id` - Soft-delete employee profile
 
-### Organization
-- `GET /api/org/tree` - Retrieve hierarchical tree of all employees
-- `GET /api/employees/:id/reportees` - Retrieve direct reports for an employee
-- `PATCH /api/employees/:id/manager` - Update reporting manager
+### Organization & Hierarchy
+- `GET /api/organization/tree` - Retrieve full reporting structure as a nested tree
+- `GET /api/employees/:id/reportees` - Retrieve list of direct reports
+- `PATCH /api/employees/:id/manager` - Assign or update reporting manager (includes cycle prevention)
+
+## 📸 Screenshots & Walkthrough
+
+Here is a visual walkthrough of the application features:
+
+#### 1. Login Page
+![Login Page](screenshots/login.png)
+
+#### 2. Dashboard
+![Dashboard Overview](screenshots/dashboard.png)
+
+#### 3. Employee Directory
+![Employee Directory Table](screenshots/directory.png)
+
+#### 4. Interactive Org Chart
+![Interactive Org Structure](screenshots/org.png)
 
 ---
 
@@ -180,4 +202,6 @@ Your application will now be running at `http://localhost:5173`!
 
 ---
 *Developed with ❤️ using the PERN stack.*
+
+
 
