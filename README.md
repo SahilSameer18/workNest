@@ -1,7 +1,6 @@
 # 🏢 WorkNest - Employee Management System
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -54,30 +53,39 @@ WorkNest is a full-stack Employee Management System designed to handle secure au
 
 ---
 
-## 📐 Database Schema & Architecture
+## 📐 Project Architecture
 
 ```mermaid
-erDiagram
-    EMPLOYEE {
-        String id PK "UUID"
-        String employeeId "Unique (e.g. EMP-001)"
-        String name
-        String email "Unique"
-        String password "Hashed"
-        String phone
-        String department
-        String designation
-        Int salary
-        DateTime joiningDate
-        Enum role "SUPER_ADMIN, HR_MANAGER, EMPLOYEE"
-        Enum status "ACTIVE, INACTIVE"
-        String profileImage "URL"
-        String managerId FK "Self-relation to Employee"
-        Boolean isDeleted "For Soft Delete"
-    }
+graph TD
+    subgraph Client [Frontend - React.js]
+        UI[Vite + React UI]
+        State[Context API]
+        Router[React Router DOM]
+        Axios[Axios Interceptors]
+        
+        UI --> State
+        UI --> Router
+        Router --> Axios
+    end
 
-    EMPLOYEE ||--o{ EMPLOYEE : "Manages (reportees)"
-    EMPLOYEE }o--|| EMPLOYEE : "Reports to (manager)"
+    subgraph Server [Backend - Node.js + Express]
+        API[Express REST API]
+        Auth[JWT & bcrypt]
+        RBAC[Role Middleware]
+        PrismaORM[Prisma Client]
+
+        API --> Auth
+        Auth --> RBAC
+        RBAC --> PrismaORM
+    end
+
+    subgraph Database [Neon PostgreSQL]
+        Postgres[(PostgreSQL)]
+    end
+
+    %% Connections
+    Axios -- "HTTP Requests (with cookies)" --> API
+    PrismaORM -- "TCP/IP Connection" --> Postgres
 ```
 
 ---
